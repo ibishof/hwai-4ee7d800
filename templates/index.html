@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Chart Assistant</title>
+    <style>
+        /* Brand palette: change these and the whole page follows. */
+        :root {
+            --bg: #f7f5f1;                   /* page background (brand) */
+            --surface: #ffffff;              /* cards */
+            --field: #fcfbf8;                /* input boxes */
+            --border: #e4e0d8;
+            --text: #2b2a28;
+            --muted: #6b6760;
+            --button: #363636;               /* Submit button (brand) */
+            --button-text: #fafafa;
+            --button-hover: #1f1f1f;
+            --accent: #7b68c4;               /* focus, chips, spinner (brand) */
+            --accent-soft: #ece8f7;
+            --accent-dark: #5a49a3;
+            --link: #8a857c;                 /* citation chips: quiet grey so they don't break up the text */
+            --link-soft: #efede8;
+            --interp: #fbf5e8;               /* interpretation section: warm, set apart from facts */
+            --interp-edge: #d9a441;
+            --interp-text: #7a5418;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 0 16px;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+        h1 { font-size: 30px; margin: 0; }
+        header { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+        header img { height: 40px; width: auto; }
+        h2 { font-size: 20px; margin: 28px 0 8px; }
+        h3 { font-size: 16px; margin: 18px 0 6px; }
+        .sub { color: var(--muted); font-size: 14px; margin-top: 0; }
+
+        /* patient picker */
+        label { font-weight: bold; }
+        input[type="text"] {
+            width: 100%; box-sizing: border-box; margin: 8px 0 16px; padding: 12px 18px;
+            border-radius: 25px; border: 1px solid var(--border); background: var(--field);
+            font-size: 17px; box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--accent); box-shadow: 0 0 0 3px rgba(123, 104, 196, 0.18); outline: none;
+        }
+
+        /* query box: large pill */
+        textarea {
+            font-family: Arial, sans-serif; width: 100%; box-sizing: border-box; margin: 8px 0;
+            padding: 18px 24px; border-radius: 50px; border: 1px solid var(--border);
+            background-color: var(--field); font-size: 19px; resize: none;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1); min-height: 100px; max-height: 220px;
+            overflow-y: hidden; transition: height 0.2s ease;
+        }
+        textarea::placeholder, input::placeholder { color: #aaa59c; font-style: italic; }
+
+        input[type="submit"] {
+            margin-top: 8px; padding: 10px 26px; border-radius: 25px; border: none;
+            background-color: var(--button); color: var(--button-text); font-size: 16px; cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        input[type="submit"]:hover { background-color: var(--button-hover); }
+        input[type="submit"]:disabled { background-color: #8a8781; cursor: wait; }
+
+        .notice { font-size: 12px; color: var(--muted); margin: 12px 0 0; }
+        .spinner {
+            display: none; border: 6px solid var(--accent-soft); border-top: 6px solid var(--accent); border-radius: 50%;
+            width: 40px; height: 40px; animation: spin 1.5s linear infinite; margin: 16px 0;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .error { background: #f9e3e1; border: 1px solid #e3aaa3; padding: 10px 14px; border-radius: 10px; }
+        .patient-card { background: var(--surface); border-radius: 10px; padding: 10px 14px; font-weight: bold; }
+
+        /* answer cards */
+        .card { background: var(--surface); border-radius: 14px; padding: 16px 20px; margin: 14px 0;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.06); }
+        .badges { margin-bottom: 8px; }
+        .badge { display: inline-block; font-size: 12px; font-weight: bold; padding: 3px 10px;
+                 border-radius: 12px; margin-right: 6px; }
+        .st-answered { background: #e5f1e8; color: #2f6b45; }
+        .st-partial { background: #f8eedb; color: #8a5a12; }
+        .st-not_recorded { background: #ecebe7; color: #55524c; }
+        .st-cannot_determine { background: var(--accent-soft); color: var(--accent-dark); }
+        .ok { background: #e5f1e8; color: #2f6b45; }
+        .bad { background: #f9e3e1; color: #9b2c22; }
+        .answer { font-size: 16px; line-height: 1.55; }
+        .checked { font-size: 13px; color: var(--muted); margin-top: 8px; }
+        .chip { display: inline-block; font-size: 10px; font-weight: normal; padding: 0 6px; margin: 0 1px;
+                border-radius: 8px; background: var(--link-soft); color: var(--link); text-decoration: none; }
+        .chip:hover { background: #e2dfd8; color: var(--text); }
+        .inf { background: #f8ecd2; border-bottom: 2px dotted var(--interp-edge); padding: 0 3px; border-radius: 3px; }
+        .problems { background: #f9e3e1; border: 1px solid #e3aaa3; border-radius: 10px;
+                    padding: 8px 14px; margin-bottom: 12px; font-size: 14px; }
+
+        /* inferences: their own section and color */
+        .inferences { background: var(--interp); border-left: 4px solid var(--interp-edge); border-radius: 10px;
+                      padding: 10px 16px; margin-top: 14px; }
+        .inferences h3 { margin-top: 4px; color: var(--interp-text); }
+        .claim { font-weight: bold; margin-top: 10px; }
+        .assume { font-size: 14px; color: #4a4741; margin: 4px 0 0; }
+
+        /* evidence: collapsed */
+        details { margin: 6px 0; }
+        summary { cursor: pointer; }
+        details.evidence-all > summary { font-weight: bold; margin-top: 14px; color: var(--accent-dark); }
+        details.ev { background: #f9f8f5; border-radius: 8px; padding: 6px 10px; }
+        details.ev > summary { font-size: 14px; }
+        .quote { font-family: Georgia, serif; }
+        .line, pre { font-family: Consolas, Menlo, monospace; font-size: 12px; white-space: pre-wrap;
+                     word-break: break-word; background: #fff; border: 1px solid var(--border);
+                     border-radius: 6px; padding: 6px 8px; margin: 6px 0; }
+        pre { max-height: 300px; overflow: auto; }
+        .tiny { font-size: 12px; color: var(--muted); }
+        table { border-collapse: collapse; margin: 6px 0; font-size: 13px; }
+        th, td { border: 1px solid var(--border); padding: 3px 10px; text-align: left; }
+        th { background: #f1eee8; }
+        .footer { font-size: 12px; color: var(--muted); margin-top: 18px; }
+    </style>
+    <script>
+        function openEv(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            let p = el;
+            while (p) { if (p.tagName === "DETAILS") p.open = true; p = p.parentElement; }
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            form.addEventListener("submit", function () {
+                document.getElementById("spinner").style.display = "block";
+                document.getElementById("submit").disabled = true;
+            });
+            const ta = document.getElementById("query");
+            const grow = () => { ta.style.height = "auto";
+                ta.style.height = Math.max(100, Math.min(ta.scrollHeight, 220)) + "px"; };
+            ta.addEventListener("input", grow); grow();
+            ta.addEventListener("keydown", e => {   // Enter submits, Shift+Enter adds a line
+                if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
+            });
+        });
+    </script>
+</head>
+<body>
+{% set status_label = {"answered": "Documented", "partial": "Partly documented",
+                       "not_recorded": "Not documented", "cannot_determine": "Conflicting documentation"} %}
+    <header>
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="" onerror="this.style.display='none'">
+        <h1>Patient Chart Assistant</h1>
+    </header>
+    <p class="sub">Ask a clinical question about one patient's chart. Answers draw only on the patient's documented
+       HIE record: every finding is quoted and traceable to its source entry. Anything not documented in the chart is
+       shown separately as an interpretation for your review.</p>
+
+    <form method="POST">
+        <label for="patient">Patient</label>
+        <input type="text" id="patient" name="patient" list="patient-list" value="{{ picked }}"
+               placeholder="Search by patient name..." autocomplete="off" required>
+        <datalist id="patient-list">
+            {% for p in patients %}<option value="{{ p }}">{% endfor %}
+        </datalist>
+
+        <label for="query">Clinical question</label>
+        <textarea id="query" name="query" placeholder="e.g. Most recent HbA1c and when it was drawn? Known allergies? Is renal function declining?" required>{{ query }}</textarea>
+        <input type="submit" id="submit" value="Submit">
+        <p class="notice">Clinical decision support for licensed clinicians. Summarizes the documented record only; it does not
+           diagnose or recommend treatment. Verify findings against the source documentation before acting on them.</p>
+    </form>
+
+    <div id="spinner" class="spinner"></div>
+
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+    {% if result %}
+        <h2>Findings from the chart</h2>
+        <div class="patient-card">{{ patient }}</div>
+
+        {% if not result.verified %}
+            <div class="problems"><b>Sources not verified.</b> This answer failed the source-documentation checks
+                {% if result.fixes %}after {{ result.fixes }} correction attempt(s){% endif %}. Do not rely on it without checking the chart.
+                <ul>{% for p in result.problems %}<li>{{ p }}</li>{% endfor %}</ul>
+                {% if not result.answers %}<pre>{{ result.raw }}</pre>{% endif %}
+            </div>
+        {% endif %}
+
+        {% for a in result.answers %}
+        <div class="card">
+            <div class="badges">
+                <span class="badge st-{{ a.status }}">{{ status_label[a.status] or a.status }}</span>
+                {% if result.verified %}<span class="badge ok">sources verified</span>{% else %}<span class="badge bad">sources not verified</span>{% endif %}
+                <b>{{ a.question }}</b>
+            </div>
+            <div class="answer">{{ a.html }}</div>
+            {% if a.checked %}<div class="checked"><b>Chart sections searched:</b> {{ a.checked }}</div>{% endif %}
+
+            {% if a.inferences %}
+            <div class="inferences">
+                <h3>Clinical interpretation, not documented in the chart. Review before relying on it.</h3>
+                {% for i in a.inferences %}
+                    <div class="claim">{{ i.claim }}</div>
+                    {% for p in i.premises %}
+                        <details class="ev">
+                            <summary>Based on <span class="chip">{{ p.id }}</span> <span class="quote">"{{ p.quote }}"</span></summary>
+                            {% set ev = p %}{% include "_evidence.html" %}
+                        </details>
+                    {% endfor %}
+                    <p class="assume"><b>Reasoning:</b> {{ i.assumption }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if a.evidence %}
+            <details class="evidence-all">
+                <summary>Source documentation ({{ a.evidence | length }})</summary>
+                {% for ev in a.evidence %}
+                    <details class="ev" id="ev-{{ a.n }}-{{ ev.id }}">
+                        <summary><span class="chip">{{ ev.id }}</span> <span class="quote">"{{ ev.quote }}"</span></summary>
+                        {% include "_evidence.html" %}
+                    </details>
+                {% endfor %}
+            </details>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <p class="footer">{{ result.calls }} model call(s){% if result.fixes %}, {{ result.fixes }} correction(s){% endif %},
+           ${{ "%.3f" | format(result.cost) }}, {{ result.seconds }}s</p>
+    {% endif %}
+</body>
+</html>

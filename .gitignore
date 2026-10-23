@@ -1,3 +1,8 @@
 data/*.json
 .venv/
 uv.lock
+
+.env
+__pycache__/
+out/*
+!out/evals/

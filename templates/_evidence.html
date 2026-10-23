@@ -1,0 +1,25 @@
+{# One evidence quote traced back: readings table, full record line, FHIR resources. Expects `ev`. #}
+{% if ev.table %}
+    <table><tr><th>Date</th><th>Value</th></tr>
+    {% for d, v in ev.table %}<tr><td>{{ d }}</td><td>{{ v }}</td></tr>{% endfor %}
+    </table>
+{% endif %}
+<div class="tiny">Full record line{% if ev.section %} ({{ ev.section }}){% endif %}:</div>
+<div class="line">{{ ev.line or "(not a record line)" }}</div>
+{% if ev.resources %}
+    <details>
+        <summary class="tiny">Original FHIR resource{{ "s" if ev.n_resources > 1 }}: {{ ev.n_resources }}
+            {% if ev.filtered %}(the ones from the quoted dates, of {{ ev.n_all }} on this line){% endif %}</summary>
+        {% for r in ev.resources %}
+            <details>
+                <summary class="tiny">{{ r.table }} · {{ r.date }} · {{ r.id }}</summary>
+                <pre>{{ r.json }}</pre>
+            </details>
+        {% endfor %}
+        {% if ev.n_resources > ev.resources | length %}
+            <div class="tiny">... and {{ ev.n_resources - ev.resources | length }} more (see the trace file).</div>
+        {% endif %}
+    </details>
+{% else %}
+    <div class="tiny">No FHIR resource behind this line (for example "none recorded").</div>
+{% endif %}

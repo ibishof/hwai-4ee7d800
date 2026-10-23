@@ -1,0 +1,56 @@
+{
+ "mode": "context only",
+ "model": "anthropic/claude-opus-5",
+ "results": [
+  {
+   "id": "chloride_mid",
+   "where": "middle of context, middle of a 174-reading line (line 121)",
+   "q": "What was Cole's serum chloride on 2021-10-06?",
+   "expect_all": [
+    "104"
+   ],
+   "pass": true,
+   "answer": "**104 mmol/L** (Chloride, serum/plasma, LOINC 2075-0) on 2021-10-06. The blood chloride (LOINC 2069-3) on that same date was also 104 mmol/L.",
+   "tool_calls": [],
+   "input_tokens": 183817,
+   "seconds": 4.2
+  },
+  {
+   "id": "chloride_no_reading",
+   "where": "nowhere: no reading on that date",
+   "q": "What was Cole's serum chloride on 2021-10-07?",
+   "expect_any": [
+    "no reading",
+    "no chloride",
+    "not recorded",
+    "no serum chloride",
+    "no measurement",
+    "no value",
+    "2021-10-06"
+   ],
+   "reject": [
+    "chloride on 2021-10-07 was",
+    "2021-10-07 was 1",
+    "2021-10-07: 1"
+   ],
+   "pass": true,
+   "answer": "Not recorded — there is no lab from 2021-10-07.\n\nThe nearest result is serum chloride **104.0 mmol/L on 2021-10-06** (LOINC 2075-0); whole-blood chloride that same day was also 104.0 mmol/L. The next value after that is 102.91 mmol/L on 2021-12-08.",
+   "tool_calls": [],
+   "input_tokens": 183817,
+   "seconds": 4.9
+  },
+  {
+   "id": "transport_count",
+   "where": "middle, a count across a long text line (line 179)",
+   "q": "Of all the times Cole was asked about transportation, how many times did he say it kept him from medical appointments or medications?",
+   "expect_all": [
+    "60"
+   ],
+   "pass": false,
+   "answer": "",
+   "tool_calls": [],
+   "input_tokens": 183833,
+   "seconds": 22.1
+  }
+ ]
+}

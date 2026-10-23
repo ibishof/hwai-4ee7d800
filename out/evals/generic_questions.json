@@ -1,0 +1,266 @@
+[
+ {
+  "kind": "simple",
+  "q": "What was his most recent Heart rate?",
+  "expect": [
+   [
+    "2026-01-26"
+   ],
+   [
+    "85"
+   ]
+  ],
+  "gold": "Heart rate: 85 on 2026-01-26",
+  "patient": "Byron Carmen Emard",
+  "patient_id": "83093df7-a1e4-b827-72e6-c6d604fd7748"
+ },
+ {
+  "kind": "complex",
+  "q": "Which medications have been ordered for his viral sinusitis, and when was each most recently ordered?",
+  "expect": [
+   [
+    "amoxicillin"
+   ],
+   [
+    "2025-12-01"
+   ]
+  ],
+  "gold": "Amoxicillin 250 MG / Clavulanate 125 MG Oral Tablet (last 2025-12-01)",
+  "patient": "Byron Carmen Emard",
+  "patient_id": "83093df7-a1e4-b827-72e6-c6d604fd7748"
+ },
+ {
+  "kind": "multi",
+  "q": "What was his most recent Body mass index (BMI) [Ratio], when did he last get the meningococcal MCV4P vaccine, and what was his most recent Sodium [Moles/volume] in Blood?",
+  "expect": [
+   [
+    "2026-01-26"
+   ],
+   [
+    "20.68",
+    "20.7",
+    "21"
+   ],
+   [
+    "2026-01-26"
+   ]
+  ],
+  "absent": "Sodium [Moles/volume] in Blood",
+  "gold": "Body mass index (BMI) [Ratio]: 20.68 on 2026-01-26; meningococcal MCV4P last 2026-01-26; Sodium [Moles/volume] in Blood: never recorded (status should be partial, or not_recorded for that part)",
+  "patient": "Byron Carmen Emard",
+  "patient_id": "83093df7-a1e4-b827-72e6-c6d604fd7748"
+ },
+ {
+  "kind": "trend",
+  "q": "How has his Systolic Blood Pressure changed over time?",
+  "expect": [
+   [
+    "2016-12-05"
+   ],
+   [
+    "88"
+   ],
+   [
+    "2026-01-26"
+   ],
+   [
+    "99"
+   ]
+  ],
+  "gold": "12 readings, first 88 on 2016-12-05, latest 99 on 2026-01-26",
+  "patient": "Byron Carmen Emard",
+  "patient_id": "83093df7-a1e4-b827-72e6-c6d604fd7748"
+ },
+ {
+  "kind": "general",
+  "q": "What is currently wrong with this patient?",
+  "active_disorders": [],
+  "gold": "Human review. Active disorders on file: none",
+  "patient": "Byron Carmen Emard",
+  "patient_id": "83093df7-a1e4-b827-72e6-c6d604fd7748"
+ },
+ {
+  "kind": "simple",
+  "q": "What was his most recent Cholesterol [Mass/volume] in Serum or Plasma?",
+  "expect": [
+   [
+    "2026-04-13"
+   ],
+   [
+    "217.6",
+    "218"
+   ]
+  ],
+  "gold": "Cholesterol [Mass/volume] in Serum or Plasma: 217.6 on 2026-04-13",
+  "patient": "Rogelio Prince Monahan",
+  "patient_id": "1426480f-ccc7-2393-40bd-f92ccf2b74b2"
+ },
+ {
+  "kind": "complex",
+  "q": "Which medications have been ordered for his essential hypertension, and when was each most recently ordered?",
+  "expect": [
+   [
+    "lisinopril"
+   ],
+   [
+    "2026-04-13"
+   ]
+  ],
+  "gold": "lisinopril 10 MG Oral Tablet (last 2026-04-13)",
+  "patient": "Rogelio Prince Monahan",
+  "patient_id": "1426480f-ccc7-2393-40bd-f92ccf2b74b2"
+ },
+ {
+  "kind": "multi",
+  "q": "What was his most recent Systolic Blood Pressure, when did he last get the Influenza vaccine, and what was his most recent A1c?",
+  "expect": [
+   [
+    "2026-04-13"
+   ],
+   [
+    "130"
+   ],
+   [
+    "2026-04-13"
+   ]
+  ],
+  "absent": "Hemoglobin A1c/Hemoglobin.total in Blood",
+  "gold": "Systolic Blood Pressure: 130 on 2026-04-13; Influenza, split virus, trivalent, PF last 2026-04-13; Hemoglobin A1c/Hemoglobin.total in Blood: never recorded (status should be partial, or not_recorded for that part)",
+  "patient": "Rogelio Prince Monahan",
+  "patient_id": "1426480f-ccc7-2393-40bd-f92ccf2b74b2"
+ },
+ {
+  "kind": "trend",
+  "q": "How has his Triglyceride [Mass/volume] in Serum or Plasma changed over time?",
+  "expect": [
+   [
+    "2017-02-20"
+   ],
+   [
+    "145",
+    "145.03"
+   ],
+   [
+    "2026-04-13"
+   ],
+   [
+    "144.7",
+    "144.73",
+    "145"
+   ]
+  ],
+  "gold": "4 readings, first 145.03 on 2017-02-20, latest 144.73 on 2026-04-13",
+  "patient": "Rogelio Prince Monahan",
+  "patient_id": "1426480f-ccc7-2393-40bd-f92ccf2b74b2"
+ },
+ {
+  "kind": "general",
+  "q": "What is currently wrong with this patient?",
+  "active_disorders": [
+   "Essential hypertension (disorder)",
+   "Fibromyalgia (disorder)",
+   "Ischemic heart disease (disorder)",
+   "Sepsis (disorder)"
+  ],
+  "gold": "Human review. Active disorders on file: Essential hypertension (disorder); Fibromyalgia (disorder); Ischemic heart disease (disorder); Sepsis (disorder)",
+  "patient": "Rogelio Prince Monahan",
+  "patient_id": "1426480f-ccc7-2393-40bd-f92ccf2b74b2"
+ },
+ {
+  "kind": "simple",
+  "q": "What was his most recent BUN?",
+  "expect": [
+   [
+    "2026-07-29"
+   ],
+   [
+    "16",
+    "16.26",
+    "16.3"
+   ]
+  ],
+  "gold": "Urea nitrogen [Mass/volume] in Serum or Plasma: 16.26 on 2026-07-29",
+  "patient": "Pat Owen Rutherford",
+  "patient_id": "57efda89-b582-bb08-8a2d-e06b2c184bfc"
+ },
+ {
+  "kind": "complex",
+  "q": "Which medications have been ordered for his diabetes mellitus type 2, and when was each most recently ordered?",
+  "expect": [
+   [
+    "insulin"
+   ],
+   [
+    "2026-07-29"
+   ]
+  ],
+  "gold": "insulin isophane, human 70 UNT/ML / insulin, regular, human 30 UNT/ML Injectable Suspension [Humulin] (last 2026-07-29)",
+  "patient": "Pat Owen Rutherford",
+  "patient_id": "57efda89-b582-bb08-8a2d-e06b2c184bfc"
+ },
+ {
+  "kind": "multi",
+  "q": "What was his most recent Protein [Mass/volume] in Urine by Test strip, when did he last get the zoster vaccine, and what was his most recent Epithelial cells [#/area] in Urine sediment by Microscopy high power field?",
+  "expect": [
+   [
+    "2026-07-29"
+   ],
+   [
+    "352.9",
+    "352.94",
+    "353"
+   ],
+   [
+    "2026-05-20"
+   ]
+  ],
+  "absent": "Epithelial cells [#/area] in Urine sediment by Microscopy high power field",
+  "gold": "Protein [Mass/volume] in Urine by Test strip: 352.94 on 2026-07-29; zoster vaccine, live last 2026-05-20; Epithelial cells [#/area] in Urine sediment by Microscopy high power field: never recorded (status should be partial, or not_recorded for that part)",
+  "patient": "Pat Owen Rutherford",
+  "patient_id": "57efda89-b582-bb08-8a2d-e06b2c184bfc"
+ },
+ {
+  "kind": "trend",
+  "q": "How has his Calcium [Mass/volume] in Serum or Plasma changed over time?",
+  "expect": [
+   [
+    "2017-03-15"
+   ],
+   [
+    "9.69",
+    "9.7"
+   ],
+   [
+    "2026-07-29"
+   ],
+   [
+    "10",
+    "9.98"
+   ]
+  ],
+  "gold": "78 readings, first 9.69 on 2017-03-15, latest 9.98 on 2026-07-29",
+  "patient": "Pat Owen Rutherford",
+  "patient_id": "57efda89-b582-bb08-8a2d-e06b2c184bfc"
+ },
+ {
+  "kind": "general",
+  "q": "What is currently wrong with this patient?",
+  "active_disorders": [
+   "Anemia (disorder)",
+   "Chronic kidney disease stage 1 (disorder)",
+   "Chronic kidney disease stage 2 (disorder)",
+   "Chronic kidney disease stage 3 (disorder)",
+   "Chronic kidney disease stage 4 (disorder)",
+   "Chronic sinusitis (disorder)",
+   "Diabetes mellitus type 2 (disorder)",
+   "Disorder of kidney due to diabetes mellitus (disorder)",
+   "Hypertriglyceridemia (disorder)",
+   "Metabolic syndrome X (disorder)",
+   "Microalbuminuria due to type 2 diabetes mellitus (disorder)",
+   "Proteinuria due to type 2 diabetes mellitus (disorder)"
+  ],
+  "gold": "Human review. Active disorders on file: Anemia (disorder); Chronic kidney disease stage 1 (disorder); Chronic kidney disease stage 2 (disorder); Chronic kidney disease stage 3 (disorder); Chronic kidney disease stage 4 (disorder); Chronic sinusitis (disorder); Diabetes mellitus type 2 (disorder); Disorder of kidney due to diabetes mellitus (disorder); Hypertriglyceridemia (disorder); Metabolic syndrome X (disorder); Microalbuminuria due to type 2 diabetes mellitus (disorder); Proteinuria due to type 2 diabetes mellitus (disorder)",
+  "patient": "Pat Owen Rutherford",
+  "patient_id": "57efda89-b582-bb08-8a2d-e06b2c184bfc"
+ }
+]

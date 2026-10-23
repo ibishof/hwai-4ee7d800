@@ -1,0 +1,62 @@
+{
+ "mode": "context only",
+ "model": "anthropic/claude-opus-5",
+ "results": [
+  {
+   "id": "chloride_mid",
+   "where": "middle of context, middle of a 174-reading line (line 121)",
+   "q": "What was Cole's serum chloride on 2021-10-06?",
+   "expect_all": [
+    "104"
+   ],
+   "pass": true,
+   "answer": "**Serum chloride was 104 mmol/L on 2021-10-06.**\n\n- Recorded under \"Chloride [Moles/volume] in Serum or Plasma\" (LOINC 2075-0), value 104 mmol/L.\n- The same date also has a blood chloride (LOINC 2069-3) of 104 mmol/L — identical value.",
+   "tool_calls": [],
+   "input_tokens": 184474,
+   "output_tokens": 158,
+   "finish_reason": "stop",
+   "seconds": 5.6
+  },
+  {
+   "id": "chloride_no_reading",
+   "where": "nowhere: no reading on that date",
+   "q": "What was Cole's serum chloride on 2021-10-07?",
+   "expect_any": [
+    "no reading",
+    "no chloride",
+    "not recorded",
+    "no serum chloride",
+    "no measurement",
+    "no value",
+    "2021-10-06"
+   ],
+   "reject": [
+    "chloride on 2021-10-07 was",
+    "2021-10-07 was 1",
+    "2021-10-07: 1"
+   ],
+   "pass": true,
+   "answer": "**Not recorded — there is no 2021-10-07 lab draw; the nearest value is serum chloride 104.0 mmol/L on 2021-10-06.**\n\n- Checked both chloride series: serum/plasma (LOINC 2075-0) and blood (LOINC 2069-3). Both have readings on **2021-10-06 = 104.0 mmol/L**, with no entry on 2021-10-07.\n- Next chloride after that date: **102.91 mmol/L on 2021-12-08** (serum and blood).\n- No labs of any type are recorded on 2021-10-07 in this record.",
+   "tool_calls": [],
+   "input_tokens": 184474,
+   "output_tokens": 254,
+   "finish_reason": "stop",
+   "seconds": 4.9
+  },
+  {
+   "id": "transport_count",
+   "where": "middle, a count across a long text line (line 179)",
+   "q": "Of all the times Cole was asked about transportation, how many times did he say it kept him from medical appointments or medications?",
+   "expect_all": [
+    "60"
+   ],
+   "pass": true,
+   "answer": "**60 of the 118 recorded responses** said transportation kept him from medical appointments or from getting medications (most recent: **2026-08-05**).\n\n- Source: PRAPARE item \"Has lack of transportation kept you from medical appointments, meetings, work, or from getting things needed for daily living\" (LOINC 93030-5), n=118 responses from 2016-08-31 through 2026-08-05.\n- Counted by summing the dated runs of the \"medical appointments/medications\" answer; the remaining 58 responses were \"Yes, it has kept me from non-medical meetings, appointments, work, or from getting things that I need.\"\n- He never answered \"No\" to this item — every recorded response indicates some transportation barrier.\n- Count is from the record listing; it may be off by one or two if runs were mis-tallied.",
+   "tool_calls": [],
+   "input_tokens": 184490,
+   "output_tokens": 1386,
+   "finish_reason": "stop",
+   "seconds": 16.7
+  }
+ ]
+}

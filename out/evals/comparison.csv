@@ -1,0 +1,16 @@
+patient,kind,full result,full calls,full fixes,full cost,full seconds,full problems,sql result,sql calls,sql fixes,sql cost,sql seconds,sql problems
+Byron Carmen Emard,simple,pass,1,0,0.0862,3.2,,pass,3,1,0.0733,12.9,
+Byron Carmen Emard,complex,pass,2,0,0.0367,11.5,,pass,4,1,0.0925,22.9,
+Byron Carmen Emard,multi,pass,3,1,0.0745,20.4,,pass,5,1,0.0901,25.3,
+Byron Carmen Emard,trend,FAIL,1,0,0.0314,11.9,unlabeled: abnormal; unlabeled: normal,pass,3,1,0.1034,29.5,
+Byron Carmen Emard,general,review,2,0,0.096,26.4,,review,5,0,0.1435,32.0,
+Rogelio Prince Monahan,simple,pass,1,0,0.1359,4.4,,pass,2,0,0.0898,9.1,
+Rogelio Prince Monahan,complex,pass,2,0,0.0808,16.0,,pass,3,0,0.0867,22.1,
+Rogelio Prince Monahan,multi,pass,3,1,0.1039,26.2,,pass,5,1,0.1146,32.1,
+Rogelio Prince Monahan,trend,FAIL,1,0,0.0231,6.5,unlabeled: abnormal; unlabeled: normal,pass,3,1,0.0585,17.2,
+Rogelio Prince Monahan,general,review,2,0,0.1,23.4,,review,6,1,0.2736,63.4,
+Pat Owen Rutherford,simple,pass,1,0,0.8187,7.7,,pass,2,0,0.1075,7.9,
+Pat Owen Rutherford,complex,pass,2,0,0.1739,18.1,,pass,4,0,0.2573,24.4,
+Pat Owen Rutherford,multi,pass,2,0,0.1598,15.8,,pass,4,0,0.0945,23.3,
+Pat Owen Rutherford,trend,pass,3,1,0.2646,29.6,,FAIL,4,1,0.1871,38.7,unlabeled: fluctuate
+Pat Owen Rutherford,general,review,3,1,0.3693,56.1,,review,7,0,0.5241,61.6,

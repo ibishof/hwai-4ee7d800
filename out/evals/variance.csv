@@ -1,0 +1,16 @@
+patient,kind,cited IDs,values,status,pass,cosine
+Byron Carmen Emard,simple,1.0,1.0,1.0,1.0,1.0
+Byron Carmen Emard,complex,1.0,1.0,1.0,1.0,0.961
+Byron Carmen Emard,multi,0.833,0.717,1.0,1.0,0.975
+Byron Carmen Emard,trend,0.245,1.0,1.0,1.0,0.963
+Byron Carmen Emard,general,0.616,0.524,1.0,nan,0.918
+Rogelio Prince Monahan,simple,0.667,0.926,1.0,1.0,0.96
+Rogelio Prince Monahan,complex,0.524,0.847,1.0,1.0,0.933
+Rogelio Prince Monahan,multi,0.706,0.683,1.0,1.0,0.985
+Rogelio Prince Monahan,trend,1.0,1.0,1.0,0.333,0.984
+Rogelio Prince Monahan,general,0.946,0.92,1.0,nan,0.975
+Pat Owen Rutherford,simple,1.0,1.0,1.0,1.0,0.982
+Pat Owen Rutherford,complex,1.0,1.0,1.0,1.0,0.98
+Pat Owen Rutherford,multi,1.0,1.0,1.0,1.0,0.979
+Pat Owen Rutherford,trend,1.0,0.629,1.0,1.0,0.976
+Pat Owen Rutherford,general,0.644,0.661,1.0,nan,0.96

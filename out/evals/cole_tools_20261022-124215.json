@@ -1,0 +1,101 @@
+{
+ "mode": "context + tools",
+ "model": "anthropic/claude-opus-5",
+ "results": [
+  {
+   "id": "dialysis_status",
+   "kind": "single",
+   "tests": "reasoning from dates: dialysis stopped appearing",
+   "q": "Is he still on dialysis?",
+   "expect": [
+    [
+     "2026-03-24"
+    ]
+   ],
+   "pass": true,
+   "answer": "**No dialysis sessions are recorded after 2026-03-24**, though the dialysis care plan is still listed as active — the record shows a ~4.5-month gap despite continued visits through 2026-08-12.\n\n- **Renal dialysis (SNOMED 265764009): 140 sessions, 2022-05-28 → 2026-03-24**, all status \"completed\"; typical pattern was clusters of 3 sessions/month.\n- The associated **Epogen (epoetin alfa 4000 U) administrations also stop on 2026-03-24** (140 doses, status completed), and pre/post-dialysis weight differences end the same day (last 2.99 kg, 2026-03-24).\n- He has had many encounters since then (urgent care, ED, check-ups through 2026-08-12) with labs, but no dialysis procedure documented.\n- Status caveat: \"Dialysis care plan\" (active from 2022-05-28) and \"Chronic kidney disease stage 4\" remain flagged active; \"Awaiting transplantation of kidney\" (since 2022-06-24) is also still active, with no transplant procedure recorded.\n- Serum creatinine remains elevated (**2.3249 mg/dL on 2026-08-12**; eGFR 24.2 mL/min/1.73 m²), so renal disease is ongoing regardless of dialysis status.",
+   "tool_calls": [
+    {
+     "tool": "search_notes",
+     "input": "dialysis stopped transplant hemodialysis",
+     "result": "date | excerpt\n2022-06-24 | ...presenting with awaiting transplantation of kidney (situation).    ## Plan  The following procedures were conducted: - referral to [transplant] surgeon (procedure) The following lab reports were completed: - basic metabolic 2000 panel - serum or plasma - urinalysis...\n2022-05-28 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-05-28 | ...Plan    ## Plan  The following lab reports were completed: - comprehensive metabolic 2000 panel - serum or plasma - urinalysis macro (dipstick) panel - urine The patient was placed on a careplan: - [dialysis] care plan (record artifact) \n2022-05-31 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-06-03 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-06-06 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-06-10 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-06-13 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-06-16 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-06-19 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-06-22 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-06-25 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-06-28 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-07-13 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-07-16 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-07-19 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-08-03 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-08-06 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-08-09 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n2022-09-21 | ...0272 mg/mg oral gel  # Assessment and Plan    ## Plan  The following procedures were conducted: - renal [dialysis] (procedure) The patient was prescribed the following medications: - 1 ml epoetin alfa 4000 unt/ml injection...\n(20 rows)"
+    },
+    {
+     "tool": "run_sql",
+     "input": "SELECT date, display, status FROM procedures WHERE display LIKE '%ialysis%' ORDER BY date DESC LIMIT 10",
+     "result": "date | display | status\n2026-03-24 | Renal dialysis (procedure) | completed\n2026-03-21 | Renal dialysis (procedure) | completed\n2026-03-18 | Renal dialysis (procedure) | completed\n2026-03-03 | Renal dialysis (procedure) | completed\n2026-02-28 | Renal dialysis (procedure) | completed\n2026-02-25 | Renal dialysis (procedure) | completed\n2026-02-10 | Renal dialysis (procedure) | completed\n2026-02-07 | Renal dialysis (procedure) | completed\n2026-02-04 | Renal dialysis (procedure) | completed\n2026-01-06 | Renal dialysis (procedure) | completed\n(10 rows)"
+    }
+   ],
+   "input_tokens": 374686,
+   "output_tokens": 870,
+   "finish_reason": "stop",
+   "seconds": 16.2
+  },
+  {
+   "id": "meds_current",
+   "kind": "single",
+   "tests": "current list vs stale 'active' orders from 2005",
+   "q": "What medications is he currently taking?",
+   "expect": [
+    [
+     "warfarin"
+    ],
+    [
+     "digoxin"
+    ],
+    [
+     "verapamil"
+    ],
+    [
+     "metformin"
+    ],
+    [
+     "insulin",
+     "humulin"
+    ],
+    [
+     "lisinopril"
+    ],
+    [
+     "hydrochlorothiazide",
+     "hctz"
+    ]
+   ],
+   "pass": true,
+   "answer": "**Eight medications have active orders at the most recent encounter (2026-08-12); several others are flagged \"active\" but were last ordered long ago.**\n\n**Currently ordered (most recent order 2026-08-12, ongoing refills):**\n| Medication | Orders / span | Indication |\n|---|---|---|\n| Insulin isophane/regular 70-30 [Humulin] | 175, 2016-03-23 → 2026-08-12 | Type 2 diabetes |\n| Metformin ER 500 mg | 175, 2016-03-23 → 2026-08-12 | Type 2 diabetes |\n| Lisinopril 10 mg | 175, 2016-03-23 → 2026-08-12 | Hypertension |\n| Hydrochlorothiazide 25 mg | 175, 2016-03-23 → 2026-08-12 | Hypertension |\n| Acetaminophen 325 mg q4–6h | 175, 2016-03-23 → 2026-08-12 | (pain) |\n| Verapamil 80 mg | 16, 2026-05-04 → 2026-08-12 | Atrial fibrillation |\n| Warfarin 5 mg | 16, 2026-05-04 → 2026-08-12 | Atrial fibrillation |\n| Digoxin 0.125 mg | 16, 2026-05-04 → 2026-08-12 | Atrial fibrillation |\n\n**Listed \"active\" but not recently reordered (status/date mismatch):**\n- Simvastatin 10 mg — last of 11 orders **2025-07-30** (hyperlipidemia); also Simvastatin 20 mg, clopidogrel 75 mg, metoprolol succinate ER 100 mg, nitroglycerin spray — each a single order dated **2005-01-26**.\n- Galantamine 4 mg — single order **2024-07-25** for Alzheimer's disease.\n\n**Recently stopped/completed:** Epoetin alfa 4000 U (Epogen), 140 in-clinic doses **2022-05-28 → 2026-03-24**, status completed — ended with his last recorded dialysis session (2026-03-24).",
+   "tool_calls": [],
+   "input_tokens": 186083,
+   "output_tokens": 969,
+   "finish_reason": "stop",
+   "seconds": 14.6
+  },
+  {
+   "id": "kidney",
+   "kind": "multi",
+   "tests": "two latest labs (one with a same-day conflict a week earlier) + stage",
+   "q": "What are his latest eGFR and serum creatinine, and what stage is his kidney disease?",
+   "expect": [
+    [
+     "24.154",
+     "24.15",
+     "24.2"
+    ],
+    [
+     "2.3249",
+     "2.32",
+     "2.33"
+    ],
+    [
+     "stage 4"
+    ]
+   ],
+   "pass": true,
+   "answer": "**Latest eGFR 24.154 mL/min/1.73 m² and serum creatinine 2.3249 mg/dL, both on 2026-08-12; the most recent CKD stage recorded is stage 4 (SNOMED 431857002, onset 2022-07-06, still listed active).**\n\n- eGFR (MDRD, LOINC 33914-3) on 2026-08-12: **24.154**. The prior date 2026-08-05 has two discordant values the same day — **19.199 and 5.54 mL/min/1.73 m²** — both are in the record; such paired values appear throughout this series.\n- Creatinine, serum/plasma (LOINC 2160-0): **2.3249 mg/dL on 2026-08-12** (range over the last year ~2.2–2.5). A separate \"Creatinine in Blood\" (LOINC 38483-4) series is far higher and erratic — latest **11.54 mg/dL on 2026-08-05**, range 1.42–52.51 — values that look implausible and may be an artifact of the source data.\n- Kidney staging history, all still flagged \"active\": stage 1 (2006-01-25), stage 2 (2011-02-02), stage 3 (2017-02-22), stage 4 (2022-07-06). Also \"Awaiting transplantation of kidney\" (2022-06-24) and referral to transplant surgeon 2022-06-24.\n- Renal dialysis recorded 140 times from 2022-05-28, reason chronic kidney disease stage 4; **last dialysis session 2026-03-24** with no sessions since.\n- Related: proteinuria due to T2DM (2017-02-22); latest urine microalbumin/creatinine ratio **496.71 mg/g on 2026-08-05**.",
+   "tool_calls": [],
+   "input_tokens": 186102,
+   "output_tokens": 805,
+   "finish_reason": "stop",
+   "seconds": 14.0
+  }
+ ]
+}

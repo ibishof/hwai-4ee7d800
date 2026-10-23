@@ -1,0 +1,90 @@
+{
+ "mode": "context only",
+ "model": "anthropic/claude-opus-5",
+ "results": [
+  {
+   "id": "dialysis_status",
+   "kind": "single",
+   "tests": "reasoning from dates: dialysis stopped appearing",
+   "q": "Is he still on dialysis?",
+   "expect": [
+    [
+     "2026-03-24"
+    ]
+   ],
+   "pass": true,
+   "answer": "**No dialysis sessions are recorded after 2026-03-24** — that is the last of 140 renal dialysis procedures (SNOMED 265764009), despite the record continuing through 2026-08-12.\n\n- **Last dialysis: 2026-03-24**, with pre/post-dialysis weight difference 2.9879 kg the same day (last of 140 such readings).\n- Dialysis-session clustering had been ~3 sessions in a block per month (e.g., 2026-02-25, 02-28, 03-03; then 03-18, 03-21, 03-24); nothing after that.\n- Epogen (epoetin alfa 4000 U/mL), given in clinic 140×, also ends **2026-03-24**, status completed — consistent with the gap.\n- Status caveat: the **Dialysis care plan remains \"active from 2022-05-28\"**, and Chronic kidney disease stage 4 (2022-07-06) plus \"Awaiting transplantation of kidney\" (2022-06-24) are still listed active; the source system often leaves items active after they end.\n- Labs/encounters continue to 2026-08-12 (serum creatinine 2.3249 mg/dL on 2026-08-12), so the absence of sessions is not due to loss of follow-up. Reason for stopping is not recorded here — visit note text is stored separately.",
+   "tool_calls": [],
+   "input_tokens": 184464,
+   "output_tokens": 660,
+   "finish_reason": "stop",
+   "seconds": 12.2
+  },
+  {
+   "id": "meds_current",
+   "kind": "single",
+   "tests": "current list vs stale 'active' orders from 2005",
+   "q": "What medications is he currently taking?",
+   "expect": [
+    [
+     "warfarin"
+    ],
+    [
+     "digoxin"
+    ],
+    [
+     "verapamil"
+    ],
+    [
+     "metformin"
+    ],
+    [
+     "insulin",
+     "humulin"
+    ],
+    [
+     "lisinopril"
+    ],
+    [
+     "hydrochlorothiazide",
+     "hctz"
+    ]
+   ],
+   "pass": true,
+   "answer": "**Eight medications have active orders written at his most recent visit (2026-08-12); several other \"active\" drugs were last ordered much earlier.**\n\n**Ordered through 2026-08-12 (current):**\n\n| Medication | Order span | Indication |\n|---|---|---|\n| Humulin 70/30 insulin susp. | 175 orders, 2016-03-23 → 2026-08-12 | Type 2 diabetes |\n| Metformin ER 500 mg daily | 175 orders, 2016-03-23 → 2026-08-12 | Type 2 diabetes |\n| Lisinopril 10 mg | 175 orders, 2016-03-23 → 2026-08-12 | Hypertension |\n| Hydrochlorothiazide 25 mg | 175 orders, 2016-03-23 → 2026-08-12 | Hypertension |\n| Acetaminophen 325 mg q4–6h | 175 orders, 2016-03-23 → 2026-08-12 | (pain) |\n| Verapamil 80 mg | 16 orders, 2026-05-04 → 2026-08-12 | Atrial fibrillation |\n| Warfarin 5 mg | 16 orders, 2026-05-04 → 2026-08-12 | Atrial fibrillation |\n| Digoxin 0.125 mg | 16 orders, 2026-05-04 → 2026-08-12 | Atrial fibrillation |\n\n**Listed \"active\" but not recently ordered — verify:** simvastatin 10 mg (last order 2025-07-30), galantamine 4 mg (single order 2024-07-25, for Alzheimer's), and four drugs each with a single order on 2005-01-26: clopidogrel 75 mg, simvastatin 20 mg, metoprolol succinate ER 100 mg, nitroglycerin 0.4 mg spray.\n\n**Recently completed:** epoetin alfa 4000 U (140 in-clinic doses, 2022-05-28 → 2026-03-24, anemia/dialysis); sodium fluoride gel (last 2026-01-28).\n\nCaveats: two simvastatin strengths and both warfarin and clopidogrel appear concurrently active — likely stale status entries worth reconciling.",
+   "tool_calls": [],
+   "input_tokens": 184464,
+   "output_tokens": 1145,
+   "finish_reason": "stop",
+   "seconds": 15.0
+  },
+  {
+   "id": "kidney",
+   "kind": "multi",
+   "tests": "two latest labs (one with a same-day conflict a week earlier) + stage",
+   "q": "What are his latest eGFR and serum creatinine, and what stage is his kidney disease?",
+   "expect": [
+    [
+     "24.154",
+     "24.15",
+     "24.2"
+    ],
+    [
+     "2.3249",
+     "2.32",
+     "2.33"
+    ],
+    [
+     "stage 4"
+    ]
+   ],
+   "pass": true,
+   "answer": "**Latest eGFR 24.154 mL/min/1.73 m² and serum creatinine 2.3249 mg/dL, both on 2026-08-12; the most recent recorded stage is chronic kidney disease stage 4 (SNOMED 431857002, onset 2022-07-06, still listed active).**\n\n- eGFR (MDRD, LOINC 33914-3, serum/plasma): 24.154 on 2026-08-12; prior values 2026-08-05 showed two results the same day — 19.199 and 5.54. A separate eGFR series reported in mL/min was last 22.548 on 2026-03-18.\n- Creatinine, serum or plasma (LOINC 2160-0): 2.3249 mg/dL on 2026-08-12 (range over record 1.87–2.50).\n- Creatinine, blood (LOINC 38483-4) is tracked separately and is markedly higher/erratic — latest 11.54 mg/dL on 2026-08-05 (range 1.42–52.51); these values look clinically implausible and disagree with the serum series.\n- Earlier CKD stages (1: 2006-01-25; 2: 2011-02-02; 3: 2017-02-22) all remain flagged \"active\" by the source system; stage 4 is the latest.\n- Related: hemodialysis from 2022-05-28 through 2026-03-24 (140 sessions, reason CKD stage 4); \"Awaiting transplantation of kidney\" since 2022-06-24; diabetic kidney disease with proteinuria; latest urine microalbumin/creatinine 496.71 mg/g on 2026-08-05.",
+   "tool_calls": [],
+   "input_tokens": 184483,
+   "output_tokens": 834,
+   "finish_reason": "stop",
+   "seconds": 11.9
+  }
+ ]
+}

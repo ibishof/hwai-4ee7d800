@@ -1,0 +1,62 @@
+{
+ "mode": "context + tools",
+ "model": "anthropic/claude-opus-5",
+ "results": [
+  {
+   "id": "chloride_mid",
+   "where": "middle of context, middle of a 174-reading line (line 121)",
+   "q": "What was Cole's serum chloride on 2021-10-06?",
+   "expect_all": [
+    "104"
+   ],
+   "pass": true,
+   "answer": "**104 mmol/L** (serum/plasma chloride, LOINC 2075-0) on 2021-10-06. The blood chloride (LOINC 2069-3) drawn the same day was also 104 mmol/L.",
+   "tool_calls": [],
+   "input_tokens": 185355,
+   "seconds": 4.9
+  },
+  {
+   "id": "chloride_no_reading",
+   "where": "nowhere: no reading on that date",
+   "q": "What was Cole's serum chloride on 2021-10-07?",
+   "expect_any": [
+    "no reading",
+    "no chloride",
+    "not recorded",
+    "no serum chloride",
+    "no measurement",
+    "no value",
+    "2021-10-06"
+   ],
+   "reject": [
+    "chloride on 2021-10-07 was",
+    "2021-10-07 was 1",
+    "2021-10-07: 1"
+   ],
+   "pass": true,
+   "answer": "**Not recorded** — there is no lab from 2021-10-07 in the record.\n\nThe nearest serum chloride values are:\n- **2021-10-06: 104 mmol/L** (Chloride, serum or plasma, LOINC 2075-0; the blood chloride, LOINC 2069-3, was also 104 that day)\n- Next value after that: 2021-12-08, 102.91 mmol/L",
+   "tool_calls": [],
+   "input_tokens": 185355,
+   "seconds": 5.6
+  },
+  {
+   "id": "transport_count",
+   "where": "middle, a count across a long text line (line 179)",
+   "q": "Of all the times Cole was asked about transportation, how many times did he say it kept him from medical appointments or medications?",
+   "expect_all": [
+    "60"
+   ],
+   "pass": true,
+   "answer": "**60 of 118 times** (the remaining 58 were \"kept me from non-medical meetings, appointments, work, or from getting things that I need\").\n\n- The transportation question (LOINC 93030-5, part of PRAPARE) was asked 118 times, from 2016-08-31 through 2026-08-05.\n- He never answered \"No\" — every response was one of the two \"Yes\" options.\n- Most recent response, 2026-08-05: \"Yes, it has kept me from medical appointments or from getting my medications.\"\n\nRelated: conditions \"Lack of access to transportation\" (onset 1962-12-05) and \"Transport problem\" (onset 1963-12-11) are both still listed active.",
+   "tool_calls": [
+    {
+     "tool": "run_sql",
+     "input": "SELECT value_text, COUNT(*) FROM observations WHERE code='93030-5' GROUP BY value_text",
+     "result": "value_text | COUNT(*)\nYes, it has kept me from medical appointments or from getting my medications | 60\nYes, it has kept me from non-medical meetings, appointments, work, or from getting things that I need | 58\n(2 rows)"
+    }
+   ],
+   "input_tokens": 370914,
+   "seconds": 9.6
+  }
+ ]
+}
